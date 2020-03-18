@@ -15,13 +15,13 @@ Working as expect, O(N!) where N length of string (Uniqueness of string, based o
 (Runs well with up to 15/16 unique chars)
 
 Assumptions: 
-Lowercase letters are different than uppercase (a != A)
+1. Lowercase letters are different than uppercase (a != A)
 
 example:
     aa -> aA == False
 
 
-Mapping is not related to character index in string 
+2. Mapping is not related to character index in string.
 
 example:
     aab -> abb == True
@@ -112,17 +112,17 @@ def findMapping(s1, s2):
 
     """
 
-    queue = charFreq(s1)
+    paths = charFreq(s1)
     goals = charFreq(s2)
 
-    if queue[0] > goals[0]:
+    if paths[0] > goals[0]:
         return False
 
     if len(goals)>1:
         for i in range(1, len(goals)):
             goals[i] += goals[i-1]
 
-    return mapDFS (queue, 0, 0, goals)    
+    return mapDFS (paths, 0, 0, goals)    
     
 
 def main():
