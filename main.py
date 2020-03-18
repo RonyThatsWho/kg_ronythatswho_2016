@@ -32,7 +32,6 @@ import sys
 from collections import Counter
 
 
-
 def charFreq(string):
     """Function takes a string and returns list with each character frequency.
 
@@ -56,9 +55,6 @@ def charFreq(string):
     result.sort(reverse=True)
         
     return result
-
-
-
 
 
 def mapDFS(paths, current, nextGoal, goals):
@@ -96,7 +92,6 @@ def mapDFS(paths, current, nextGoal, goals):
         elif mapDFS(pathsLeft, potential, nextGoal, goals):
             return True
 
-
     return False
 
 
@@ -123,19 +118,12 @@ def findMapping(s1, s2):
     if queue[0] > goals[0]:
         return False
 
-    
     if len(goals)>1:
         for i in range(1, len(goals)):
             goals[i] += goals[i-1]
 
+    return mapDFS (queue, 0, 0, goals)    
     
-    #return True
-    return mapDFS (queue, 0, 0, goals)
-    
-    
-
-
-
 
 def main():
     """Main function takes two strings and determines if one-to-one mapping exists.
@@ -170,7 +158,6 @@ def main():
     else:
         result = "false"
                          
-
     print (result)
     return 0
 
