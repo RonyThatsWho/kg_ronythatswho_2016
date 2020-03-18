@@ -5,6 +5,23 @@
 
 """
 
+Assumptions: 
+Lowercase letters are different than uppercase (a != A)
+
+example:
+    aa -> aA == False
+
+
+Mapping is not related to character index in string 
+
+example:
+    aab -> abb == True
+    F(a) = b, F(b) = a
+
+
+Utilized dfs under assumption one-to-one map is not dependent on character index. (unlike isomorphic strings)
+Working as expect, O(N!) where N length of string (based on number of unique characters.)
+(Runs well with up to 15/16 unique chars)
 
 """
 
@@ -20,7 +37,7 @@ def charFreq(string):
         string (String): string that will be processed
 
     Returns:
-        List (ints): 
+        List (ints): Frequency of each unique character. Ordered by decreasing order (most common first) 
 
     """
 
@@ -86,9 +103,9 @@ def findMapping (s1, s2):
     """
     Driver function, Creates the queue list and goals, then calls a recursive depth-first-search function with intial parameters
 
-    Param:
-        s1 (string): 
-        s2 (string):
+    Parameters:
+        s1 (string): First string that needs to be mapped to the other
+        s2 (string): Second string which will be mapped onto and where goals are derived from
     
     Returns:
         Boolean: Returns result from dfs search
@@ -138,7 +155,7 @@ def main ():
         return -1
 
     if len(sys.argv[1]) != len(sys.argv[2]):
-        print (len(sys.argv[1]) , len(sys.argv[2]) )
+        #print (len(sys.argv[1]) , len(sys.argv[2]) )
         print ("false")
         return 0
 
@@ -154,4 +171,6 @@ def main ():
     print (result)
     return 0
 
-main()
+
+if __name__ == "__main__":
+    main()
