@@ -4,6 +4,15 @@
 #March 2020
 
 """
+Solution for Kargo Software Engineer Assesment.
+
+Question:
+Determine whether a one-to-one character mapping exists from one string, s1, to another string, s2.
+
+
+Utilized depth-first-search under assumption one-to-one map is not dependent on character index. (unlike isomorphic strings)
+Working as expect, O(N!) where N length of string (Uniqueness of string, based on number of unique characters.)
+(Runs well with up to 15/16 unique chars)
 
 Assumptions: 
 Lowercase letters are different than uppercase (a != A)
@@ -17,12 +26,6 @@ Mapping is not related to character index in string
 example:
     aab -> abb == True
     F(a) = b, F(b) = a
-
-
-Utilized dfs under assumption one-to-one map is not dependent on character index. (unlike isomorphic strings)
-Working as expect, O(N!) where N length of string (based on number of unique characters.)
-(Runs well with up to 15/16 unique chars)
-
 """
 
 import sys
@@ -31,9 +34,9 @@ from collections import Counter
 
 
 def charFreq(string):
-    """ Function takes a string and returns list with each character frequency
+    """Function takes a string and returns list with each character frequency.
 
-    Arguements:
+    Arguments:
         string (String): string that will be processed
 
     Returns:
@@ -58,11 +61,11 @@ def charFreq(string):
 
 
 
-def mapDFS (queue, current, nextGoal, goals):
-    """Recursive function that explorers mapping possibilities and returns True if path that crosses ALL goals is possible
+def mapDFS(paths, current, nextGoal, goals):
+    """Recursive function that explorers mapping possibilities and returns True if path that crosses ALL goals is possible.
 
-    Arguements:
-         queue (list of ints): currently available paths to choose from
+    Arguments:
+         paths (list of ints): currently available paths to choose from
          current (int): Current subtotal before selecting next potential path
          nextGoal (int): current target goal index from goals array
          goals (list of ints) list of all goals that NEED to be visited
@@ -74,24 +77,23 @@ def mapDFS (queue, current, nextGoal, goals):
 
     """
 
-    for path in queue:
+    for path in paths:        
+        potential = current + path
         
-        position = current + path
-        
-        if position > goals[nextGoal]:
+        if potential > goals[nextGoal]:
             continue;
 
-        if position == goals[len(goals)-1]:
+        if potential == goals[len(goals)-1]:
             return True
         
-        newQueue = list(queue)
-        newQueue.remove(path)
+        pathsLeft = list(paths)
+        pathsLeft.remove(path)
 
-        if position == goals[nextGoal]:
-            if mapDFS(newQueue, position, nextGoal + 1, goals):
+        if potential == goals[nextGoal]:
+            if mapDFS(pathsLeft, potential, nextGoal + 1, goals):
                 return True
         
-        elif mapDFS(newQueue, position, nextGoal, goals):
+        elif mapDFS(pathsLeft, potential, nextGoal, goals):
             return True
 
 
@@ -99,9 +101,10 @@ def mapDFS (queue, current, nextGoal, goals):
 
 
 
-def findMapping (s1, s2):
-    """
-    Driver function, Creates the queue list and goals, then calls a recursive depth-first-search function with intial parameters
+def findMapping(s1, s2):
+    """Driver function for dfs function.
+
+    Creates the queue list and goals, then calls a recursive depth-first-search function with intial parameters
 
     Parameters:
         s1 (string): First string that needs to be mapped to the other
@@ -134,11 +137,11 @@ def findMapping (s1, s2):
 
 
 
-def main ():
-    """
-    Main function takes two strings and determines if one-to-one mapping exists
+def main():
+    """Main function takes two strings and determines if one-to-one mapping exists.
+    
     True or False result will print to output
-    No output if arguements incorrect
+    No output if number of arguments incorrect
 
     Parameters:
         argv[1] (String): String1, String source to be mapped
